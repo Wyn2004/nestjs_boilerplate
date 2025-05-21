@@ -68,7 +68,7 @@ async function bootstrap() {
 
   // auto validate DTO base on decorator
   app.useGlobalPipes(
-    new ValidationPipe(validationOptions as ValidationPipeOptions),
+    new ValidationPipe(validationOptions as unknown as ValidationPipeOptions),
   );
 
   // resolve promises in responses
