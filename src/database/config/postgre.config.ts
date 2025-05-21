@@ -7,5 +7,5 @@ export default registerAs<PostgresConfig>('postgres', () => ({
   username: process.env.POSTGRE_DATABASE_USERNAME || 'postgres',
   password: process.env.POSTGRE_DATABASE_PASSWORD || 'postgres',
   database: process.env.POSTGRE_DATABASE_NAME || 'postgres',
-  synchronize: true,
+  synchronize: process.env.POSTGRE_DATABASE_SYNCHRONIZE === 'true',
 }));
