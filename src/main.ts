@@ -21,6 +21,7 @@ import validationOptions from '@utils/validation-option';
 import { ResolvePromisesInterceptor } from '@utils/serializer.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { GlobalExceptionFilter } from '@common/filters/global-exception.filter';
+import { DataSource } from 'typeorm';
 
 async function bootstrap() {
   initializeTransactionalContext();
@@ -29,6 +30,8 @@ async function bootstrap() {
   });
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  const dataSource = app.get(DataSource);
+  await dataSource.runMigrations();
 
   const configService = app.get(ConfigService<AllConfigType>);
   const reflector = app.get(Reflector);

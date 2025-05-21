@@ -16,9 +16,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get<string>('postgres.database'),
       synchronize: this.configService.get<boolean>('postgres.synchronize'),
       entities: [`${__dirname}/../../modules/**/entities/*.entity{.ts,.js}`],
-      migrations: [`${__dirname}/migrations/*{.ts,.js}`],
+      migrations: [`${__dirname}/../migrations/*{.ts,.js}`],
       // subscribers: [`${__dirname}/../middlewares/subscribers/*{.ts,.js}`],
-      // logging: process.env.NODE_ENV === 'development',
+      logging: process.env.NODE_ENV === 'development',
       migrationsTableName: 'migrations',
       autoLoadEntities: true,
     };
