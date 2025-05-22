@@ -10,6 +10,7 @@ import {
 import { FeedbackService } from './feedback.service';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
+import { ApiResponseDto } from '@common/dto/api-response.dto';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -26,8 +27,9 @@ export class FeedbackController {
   }
 
   @Get()
-  findAll() {
-    return this.feedbackService.findAll();
+  async findAll() {
+    const response = await this.feedbackService.findAll();
+    return new ApiResponseDto(200, 'Success', response);
   }
 
   @Get(':id')
