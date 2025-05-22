@@ -7,6 +7,10 @@ import postgreConfig from '@database/config/postgre.config';
 import { UsersModule } from '@modules/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from '@database/config/type-orm.config';
+import mongoConfig from '@database/config/mongo.config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { FeedbackModule } from '@modules/feedback/feedback.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,7 +18,7 @@ import { TypeOrmConfigService } from '@database/config/type-orm.config';
       load: [
         appConfig,
         postgreConfig,
-        // databaseConfig,
+        mongoConfig,
         // authConfig,
         // mailConfig,
         // fileConfig,
@@ -30,7 +34,15 @@ import { TypeOrmConfigService } from '@database/config/type-orm.config';
       useClass: TypeOrmConfigService,
       inject: [ConfigService],
     }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('mongo.uri'),
+      }),
+      inject: [ConfigService],
+    }),
     UsersModule,
+    FeedbackModule,
   ],
   controllers: [AppController],
   providers: [AppService],
