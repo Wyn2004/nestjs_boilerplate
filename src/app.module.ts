@@ -10,6 +10,10 @@ import { TypeOrmConfigService } from '@database/config/type-orm.config';
 import mongoConfig from '@database/config/mongo.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FeedbackModule } from '@modules/feedback/feedback.module';
+import redisConfig from '@database/config/redis.config';
+import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
+import * as redisStore from 'cache-manager-ioredis';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -19,6 +23,7 @@ import { FeedbackModule } from '@modules/feedback/feedback.module';
         appConfig,
         postgreConfig,
         mongoConfig,
+        redisConfig,
         // authConfig,
         // mailConfig,
         // fileConfig,
@@ -40,6 +45,33 @@ import { FeedbackModule } from '@modules/feedback/feedback.module';
         uri: configService.get<string>('mongo.uri'),
       }),
       inject: [ConfigService],
+    }),
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): RedisModuleOptions => ({
+        type: 'single',
+        options: {
+          host: configService.get<string>('redis.host'),
+          port: configService.get<number>('redis.port'),
+          password: configService.get<string>('redis.password'),
+        },
+      }),
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const redisConfig = configService.get('redis');
+        return {
+          store: redisStore,
+          host: redisConfig.host,
+          port: redisConfig.port,
+          password: redisConfig.password,
+          ttl: 300,
+        };
+      },
     }),
     UsersModule,
     FeedbackModule,
