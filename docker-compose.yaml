@@ -39,8 +39,6 @@ services:
     container_name: redis_container
     ports:
       - '${REDIS_DATABASE_PORT}:${REDIS_DATABASE_PORT}'
-    environment:
-      REDIS_PASSWORD: ${REDIS_DATABASE_PASSWORD}
     volumes:
       - redis_data:/data
     restart: always

@@ -60,7 +60,6 @@ import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
         options: {
           host: configService.get<string>('redis.host'),
           port: configService.get<number>('redis.port'),
-          password: configService.get<string>('redis.password'),
         },
       }),
     }),
@@ -74,7 +73,6 @@ import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
           store: redisStore,
           host: redisConfig.host,
           port: redisConfig.port,
-          password: redisConfig.password,
           ttl: 300,
         };
       },

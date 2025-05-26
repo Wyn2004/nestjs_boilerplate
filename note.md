@@ -5,3 +5,7 @@ tạo guard trong nest nhanh:
 
 tạo nhanh module trong nest:
   nest g resource name-resource
+
+get key redis
+  redis-cli 
+  KEYS *
