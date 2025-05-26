@@ -11,17 +11,24 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
-  name: string;
-
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  password: string;
+  @Column({ nullable: true })
+  password?: string;
 
-  @Column({ default: 'user' })
-  role: string;
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column({ nullable: true })
+  avatar?: string;
+
+  // 'local' hoặc 'google'
+  @Column({ default: 'local' })
+  provider: string;
 
   @CreateDateColumn()
   createdAt: Date;

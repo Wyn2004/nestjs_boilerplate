@@ -14,6 +14,10 @@ import redisConfig from '@database/config/redis.config';
 import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
 import * as redisStore from 'cache-manager-ioredis';
 import { CacheModule } from '@nestjs/cache-manager';
+import googleConfig from '@modules/auth/config/google-oauth.config';
+import { AuthModule } from '@modules/auth/auth.module';
+import jwtConfig from '@modules/auth/config/jwt.config';
+import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
 
 @Module({
   imports: [
@@ -24,11 +28,13 @@ import { CacheModule } from '@nestjs/cache-manager';
         postgreConfig,
         mongoConfig,
         redisConfig,
+        jwtConfig,
+        refreshJwtConfig,
         // authConfig,
+        googleConfig,
         // mailConfig,
         // fileConfig,
         // facebookConfig,
-        // googleConfig,
         // appleConfig,
       ],
       cache: true,
@@ -73,6 +79,7 @@ import { CacheModule } from '@nestjs/cache-manager';
         };
       },
     }),
+    AuthModule,
     UsersModule,
     FeedbackModule,
   ],
