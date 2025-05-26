@@ -9,6 +9,18 @@ export const hashString = async (string: string): Promise<string> => {
   }
 };
 
+export const compareString = async (
+  string: string,
+  hash: string,
+): Promise<boolean> => {
+  try {
+    return await argon2.verify(hash, string);
+  } catch (error) {
+    console.error('Error comparing string:', error);
+    throw error;
+  }
+};
+
 export const convertToSeconds = (timeString: string): number => {
   // Regular expression to match the value and unit (e.g., "15s", "1h", "2d")
   const regex = /^(\d+)([smhdwy])$/;

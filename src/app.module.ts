@@ -14,10 +14,13 @@ import redisConfig from '@database/config/redis.config';
 import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
 import * as redisStore from 'cache-manager-ioredis';
 import { CacheModule } from '@nestjs/cache-manager';
-import googleConfig from '@modules/auth/config/google-oauth.config';
+import googleConfig from '@modules/auth/configs/google-oauth.config';
 import { AuthModule } from '@modules/auth/auth.module';
-import jwtConfig from '@modules/auth/config/jwt.config';
-import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
+import jwtConfig from '@modules/auth/configs/jwt.config';
+import refreshJwtConfig from '@modules/auth/configs/refresh-jwt.config';
+import authConfig from '@modules/auth/configs/auth.config';
+import mailConfig from '@modules/mail/configs/mail.config';
+import { MaillerModule } from '@modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -30,12 +33,9 @@ import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
         redisConfig,
         jwtConfig,
         refreshJwtConfig,
-        // authConfig,
+        authConfig,
         googleConfig,
-        // mailConfig,
-        // fileConfig,
-        // facebookConfig,
-        // appleConfig,
+        mailConfig,
       ],
       cache: true,
       envFilePath: ['.env'],
@@ -80,6 +80,7 @@ import refreshJwtConfig from '@modules/auth/config/refresh-jwt.config';
     AuthModule,
     UsersModule,
     FeedbackModule,
+    MaillerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

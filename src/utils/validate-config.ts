@@ -14,9 +14,9 @@ function validateConfig<T extends object>(
   });
 
   if (errors.length > 0) {
-    throw new Error(errors.toString() as string);
+    throw new Error(errors.toString());
   }
-  return validatedConfig as T;
+  return validatedConfig;
 }
 
 export default validateConfig;

@@ -17,11 +17,11 @@ export class User {
   @Column({ nullable: true })
   password?: string;
 
-  @Column()
-  firstName: string;
+  @Column({ nullable: true })
+  firstName?: string;
 
-  @Column()
-  lastName: string;
+  @Column({ nullable: true })
+  lastName?: string;
 
   @Column({ nullable: true })
   avatar?: string;

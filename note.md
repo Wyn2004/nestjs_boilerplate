@@ -1,4 +1,4 @@
-http://localhost:3000/api-docs#/
+http://localhost:3333/api-docs#/
 
 tạo guard trong nest nhanh:
   nest g gu guard/name-guard

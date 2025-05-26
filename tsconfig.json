@@ -27,7 +27,8 @@
       "@guards/*": ["src/guards/*"],
       "@decorators/*": ["src/decorators/*"],
       "@database/*": ["src/database/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@types/*": ["src/types/*"]
     }
   }
 }

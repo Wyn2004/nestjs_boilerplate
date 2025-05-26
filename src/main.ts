@@ -10,7 +10,6 @@ import {
   ExceptionFilter,
   NestInterceptor,
   ValidationPipe,
-  ValidationPipeOptions,
   VersioningType,
 } from '@nestjs/common';
 import * as morgan from 'morgan';
@@ -70,9 +69,7 @@ async function bootstrap() {
   );
 
   // auto validate DTO base on decorator
-  app.useGlobalPipes(
-    new ValidationPipe(validationOptions as unknown as ValidationPipeOptions),
-  );
+  app.useGlobalPipes(new ValidationPipe(validationOptions));
 
   // resolve promises in responses
   app.useGlobalInterceptors(

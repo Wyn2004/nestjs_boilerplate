@@ -7,6 +7,8 @@ import { ConfigService } from '@nestjs/config';
 import { convertToSeconds, hashString } from '@utils/auth';
 import Redis from 'ioredis';
 import { InjectRedis } from '@nestjs-modules/ioredis';
+import { ResponseUserDto } from './dto/response-user.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -29,9 +31,9 @@ export class UsersService {
     return reponse;
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<ResponseUserDto> {
     const user = await this.userRepository.findOne({ where: { email } });
-    return user;
+    return plainToInstance(ResponseUserDto, user);
   }
 
   async updateRefreshToken(userId: string, refreshToken: string) {

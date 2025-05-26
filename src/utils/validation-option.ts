@@ -5,28 +5,12 @@ import {
   ValidationPipeOptions,
 } from '@nestjs/common';
 
-function generateErrors(errors: ValidationError[]) {
-  return errors.reduce<Record<string, string | Record<string, string>>>(
-    (accumulator, currentValue) => ({
-      ...accumulator,
-      [currentValue.property]:
-        (currentValue.children?.length ?? 0) > 0
-          ? generateErrors(currentValue.children ?? [])
-          : Object.values(currentValue.constraints ?? {}).join(', '),
-    }),
-    {},
-  );
-}
-
 const validationOptions: ValidationPipeOptions = {
   transform: true,
-  whitelist: true,
+  whitelist: false,
   errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-  exceptionFactory: (errors: ValidationError[]) => {
-    return new UnprocessableEntityException({
-      status: HttpStatus.UNPROCESSABLE_ENTITY,
-      errors: generateErrors(errors),
-    });
+  exceptionFactory: (validationErrors: ValidationError[] = []) => {
+    return new UnprocessableEntityException(validationErrors);
   },
 };
 
